@@ -15,22 +15,13 @@
     <p class="text-muted small">Tap Location name to get more images</p>
 </div>
 
-
-
+<!-- A simple div to block the screen with an image floating in the center -->
 <script id="image-popup-template" type="text/template">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><%= image.get('title') %></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-	    <!-- Sometimes there isn't a retina sized image so leave an empty srcset" -->
-		<img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="img-fluid">	
-      </div>
-    </div>
+  <div class="image-box">
+      <h3 class="text-center text-muted"><%= image.get('title') %></h3>
+        <img src="<%= image.get("url_m") %>" srcset="<%= image.get("url_n") %> 2x, <%= image.get("url_z") %> 3x" class="thumb old-image">
+        <img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="new-image">
+    <p class="text-center text-muted small">Click anywhere to return to Gallery</p>
   </div>
 </script>
 

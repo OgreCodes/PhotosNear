@@ -2,11 +2,11 @@
 
 var locations = new Backbone.Collection(
 [
-	{	radius: 25, 
-		maxAge: 2, 
-		title: "Lake<br>Tahoe",
-		latitude: 39.096848,
-		longitude: -120.032349
+	{	radius: 3, 
+		maxAge: 1, 
+		title: "Tahoe Rim<br>Trail",
+		latitude: 38.85690,
+		longitude: -119.9002
 	},
 	{	radius: 30, 
 		maxAge: 10, 
@@ -14,7 +14,7 @@ var locations = new Backbone.Collection(
 		latitude: 46.2076116,
 		longitude: -122.0853704
 	},
-	{	radius: .25, 
+	{	radius: 0.25, 
 		maxAge: 0.5, 
 		title: "Coit<br>Tower",
 		latitude: 37.8024286,

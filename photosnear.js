@@ -1,8 +1,8 @@
-/* A simple search to find images near a series of locations. 
+/* Search to find images near a series of locations. 
 	
 	Requires location details from locations.js.
 	
-	
+	I got a bit carried away.
 */
 
 // Set some contants
@@ -13,7 +13,7 @@ var flickrRequest = {
     method:"flickr.photos.search",
     per_page: 5,
     sort: "date-posted-desc",
-    extras: "url_m,url_n, url_z, url_c, url_h" // Add on image URLs 
+    extras: "url_m,url_n, url_z, url_c, url_o" // Add on image URLs 
 };
 
 // Cache underscore templates which are stored in the HTML file
@@ -41,8 +41,7 @@ var ImageFinder = Backbone.Collection.extend({
 		var locationParams = {
 			lat: location.get("latitude"),
 		    lon: location.get("longitude"),
-		    radius: location.get("radius"),
-    	    min_taken_date: new Date(Date() - ONE_DAY * location.get("maxAge")),
+		    radius: location.get("radius")
 		};
 		this.flickrRequest = _.extend(this.flickrRequest, locationParams);
 	},
@@ -66,7 +65,7 @@ var ImageFinder = Backbone.Collection.extend({
 var ImageView = Backbone.View.extend({
 	initialize: function(options) {
 		this.render();
-		// Bind the load event: Credit: 
+		// Bind the load event so we can swap in the new image gracefully.
 		this.$('img.new-image').on('load', _.bind(this.revive, this)); 
 	},
 	events: {
@@ -92,20 +91,30 @@ var ImageView = Backbone.View.extend({
 	}
 });
 
-// create a bootstrap popup for the image 
+// Pop up the image... wasn't explicitly requested, but kind of required for a gallery.
+// When we first load the page drop in the existing thumbnail then swap it out gracefully 
+// When we get the full sized image.
 var ImagePopupView = Backbone.View.extend({
-	className: "modal fade",
+	className: "full-screen-popup",
 	initialize: function() {
 		this.render();
 		$("body").append(this.$el);
-		this.$el.modal("show");
+		this.$('img.new-image').on('load', _.bind(this.revive, this)); 
 	},
 	render: function() {
 		// render the popup and return 
 		this.$el.html(imagePopupTemplate({ image: this.model }));
+		// This ensures the images are visible, centered, and the same size.
+		this.$el.css("paddingTop", $(window).scrollTop()+5);
+		this.$("img").css("maxWidth", Math.min(800,$(window).width() - 8))
+			.css("maxHeight", Math.min(800,$(window).height() - 120));
 	},
 	events: {
-		'hidden.bs.modal': 'teardown'
+		'click': 'teardown'
+	},
+	revive: function() {
+		this.$("img.thumb").remove();
+		this.$("img.new-image").removeClass("new-image");
 	},
 	teardown: function() {
 		// clean up 
@@ -118,25 +127,40 @@ var ImagePopupView = Backbone.View.extend({
 var LocationView = Backbone.View.extend({
 	className: 'd-flex row no-gutters location-container',
 	initialize: function() {
+		// Render the base view, Add it to the DOM, and call call initialize images
 		this.imageViews = [];
-		$(".container").append(this.render());
+		this.render();
+		$(".container").append(this.$el);
+		this.initializeImages();
+	},
+	render: function() {
+		this.$el.html(locationTemplate({ location: this.model }));
+	},
+	initializeImages: function() {
+		// Create the image collection, set the initial filter and fetch the images.
 		this.collection = new ImageFinder();
 		this.collection.filterByLocation(this.model);		
 		this.fetchImages();
 	},
-	render: function() {
-		this.$el.html(locationTemplate({ location: this.model }));
-		return this.$el;
+	fetchImages: function() {
+		var thisView = this;
+		
+		this.cleanUpViews();
+		
+		this.collection.fetchImages({ 
+			success: function() { thisView.renderImages() }, 
+			error: function() { thisView.errorRender() }
+		});
 	},
 	renderImages: function() {
+		// I have explicit "slots" for each image so they don't jump around when loading.
 		var thisView = this;
 		var nextImageDiv = 1;
 		this.collection.each(function(image) {
 			thisView.imageViews.push(new ImageView({model: image, el: thisView.$(".image-"+nextImageDiv) }));
 			nextImageDiv += 1;
 		});
-	},
-	events: {
+	},	events: {
 		"click .next-page": "nextPage",
 	},
 	nextPage: function(event) {
@@ -152,16 +176,7 @@ var LocationView = Backbone.View.extend({
 	renderError: function(collection, response, options) {
 		this.$el.append("<div class='alert alert-danger'>Error: " + response + "</div>");
 	},
-	fetchImages: function() {
-		var thisView = this;
-		
-		this.cleanUpViews();
-		
-		this.collection.fetchImages({ 
-			success: function() { thisView.renderImages() }, 
-			error: function() { thisView.errorRender() }
-		});
-	},
+
 	// Turn off events on the old image views so we don't get multiple images firing at once.
 	cleanUpViews: function() {
 		_(this.imageViews).each(function(view) {

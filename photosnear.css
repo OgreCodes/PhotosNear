@@ -18,6 +18,7 @@ a, a:hover, a:active, a:visited {
 	font-size: 96px;
 }
 
+/* Size and layout for the thumbnail images and location titles */
 .nearby-image, .location-title {
 	padding: 0px 8px 2px 8px !important;
 	height: 156px;
@@ -39,19 +40,7 @@ a, a:hover, a:active, a:visited {
 	box-shadow: 4px 3px 6px 1px #222;
 }
 
-
-img.new-image {
-	display: none;
-}
-
-/* Faded and greyscale old images */
-img.old-image {
-	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
-    filter: grayscale(100%);
-    opacity: 0.6;
-}
-
-
+/* Set up a simple box for the clickable location title */
 .location-title>a {
 	display: block;
 	width: 160px; 
@@ -63,18 +52,57 @@ img.old-image {
 	padding: 8px 0;
 }
 
-/* I'm sure you know where this red/ purple fade comes from */
+/* Red/ purple fade comes from http://www.redshiftdigital.com */
 .location-title>a:hover {
 	background-image: linear-gradient(45deg, rgb(255, 41, 83), rgb(202, 1, 173));
 }
 
+/* Spread rows a bit for logical grouping of elements */
 .row {
 	margin-top: 24px;
 }
 
+/* These Classes are used for image animation effects */
+img.new-image {
+	display: none;
+}
+
+img.old-image {
+	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+    filter: grayscale(100%);
+    opacity: 0.6;
+}
+
+/* Image Popups */
+body {
+	position: relative;
+}
+
+.full-screen-popup {
+	position: absolute;
+	top: 1px;
+	width: 100%;
+	height: 100%;
+	background-color: #fff;
+	padding: 5px;
+	text-align: center;
+}
+
+.image-box {
+	width: 100%;
+	margin: auto;
+}
+
+.full-screen-popup>img,  {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+
+/* On phones having lots of aspect ratios makes for a really goofy display 
+	so lets fit them to size and tighten things up a bit. */
 @media (max-width: 575px) {
-	/* On phones having lots of aspect ratios makes for a really goofy display 
-		so lets fit them to size and tighten things up a bit. */
 	.nearby-image>img {
 		object-fit: none;
 		object-position: center;
@@ -84,6 +112,7 @@ img.old-image {
 	.nearby-image, .location-title {
 		padding: 0 4px !important;
 	}
+	/* We actually make the title bigger here so we present a consistent size/ shaped element at this view */
 	.location-title>a { 
 		height: 120px;
 		padding-top: 20px;
