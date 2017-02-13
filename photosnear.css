@@ -10,6 +10,10 @@ h1 {
 	color: #f72962
 }
 
+.emojizilla {
+	font-size: 96px;
+}
+
 .nearby-image, .location-title {
 	padding: 0px 8px 2px 8px !important;
 	height: 156px;

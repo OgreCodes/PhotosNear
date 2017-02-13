@@ -29,12 +29,6 @@
 	    <!-- Sometimes there isn't a retina sized image so leave an empty srcset" -->
 		<img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="img-fluid">	
       </div>
-<!--
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
--->
     </div>
   </div>
 </script>
@@ -47,11 +41,11 @@
 	<div class='col-6 col-md-4 col-lg-2 location-title'><a href='#' class="next-page align-middle ">
 		<span class="align-middle"><%= location.get("title") %></span>
 	</a></div>
-	<div class="col-6 col-md-4 col-lg-2 nearby-image image-1 text-center"></div>
-	<div class="col-6 col-md-4 col-lg-2 nearby-image image-2 text-center"></div>
-	<div class="col-6 col-md-4 col-lg-2 nearby-image image-3 text-center"></div>
-	<div class="col-6 col-md-4 col-lg-2 nearby-image image-4 text-center"></div>
-	<div class="col-6 col-md-4 col-lg-2 nearby-image image-5 text-center"></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-1 text-center"><span class="emojizilla old-image">🌁</span></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-2 text-center"><span class="emojizilla old-image">🌁</span></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-3 text-center"><span class="emojizilla old-image">🌁</span></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-4 text-center"><span class="emojizilla old-image">🌁</span></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-5 text-center"><span class="emojizilla old-image">🌁</span></div>
 </script>
 
 <!-- A best guess at retina ready images, resolutions aren't exactly 2x and 3x, but it's what Flickr provides -->
@@ -59,8 +53,7 @@
 		<img src="<%= image.get("url_m") %>" srcset="<%= image.get("url_n") %> 2x, <%= image.get("url_z") %> 3x" class="img-fluid new-image">	
 </script>
 
-	<!-- This would also be compressed and bundled for speed if there were a build step on this project -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
