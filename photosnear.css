@@ -10,6 +10,10 @@ h1 {
 	color: #f72962
 }
 
+a, a:hover, a:active, a:visited {
+    text-decoration:none !important;
+}
+
 .emojizilla {
 	font-size: 96px;
 }
@@ -61,7 +65,6 @@ img.old-image {
 
 /* I'm sure you know where this red/ purple fade comes from */
 .location-title>a:hover {
-	text-decoration: none;
 	background-image: linear-gradient(45deg, rgb(255, 41, 83), rgb(202, 1, 173));
 }
 
