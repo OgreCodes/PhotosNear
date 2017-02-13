@@ -1,0 +1,75 @@
+<!DOCTYPE html> <!-- Page Boilerplate pulled from Bootstrap's sample code -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+<link rel="stylesheet" href="photosnear.css">
+</head>
+<body>
+
+
+<div class="container">
+    <h1>photos near<span class="pink">...</span></h1>
+    <p class="text-muted small">Tap Location name to get more images</p>
+</div>
+
+
+
+<script id="image-popup-template" type="text/template">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= image.get('title') %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+	    <!-- Sometimes there isn't a retina sized image so leave an empty srcset" -->
+		<img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="img-fluid">	
+      </div>
+<!--
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+-->
+    </div>
+  </div>
+</script>
+
+
+<!-- If we had a build step we'd put these templates into a JST file -->
+<!-- I prefer templates in the HTML rather than crammed into multiple lines in javascript -->
+<script id="location-template" type="text/template">
+<!-- Wrap the header so we are consistent with the wrapped images -->
+	<div class='col-6 col-md-4 col-lg-2 location-title'><a href='#' class="next-page align-middle ">
+		<span class="align-middle"><%= location.get("title") %></span>
+	</a></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-1 text-center"></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-2 text-center"></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-3 text-center"></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-4 text-center"></div>
+	<div class="col-6 col-md-4 col-lg-2 nearby-image image-5 text-center"></div>
+</script>
+
+<!-- A best guess at retina ready images, resolutions aren't exactly 2x and 3x, but it's what Flickr provides -->
+<script id="image-template" type="text/template">
+		<img src="<%= image.get("url_m") %>" srcset="<%= image.get("url_n") %> 2x, <%= image.get("url_z") %> 3x" class="img-fluid new-image">	
+</script>
+
+	<!-- This would also be compressed and bundled for speed if there were a build step on this project -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <script src="underscore.js"></script>
+    <script src="backbone.js"></script>
+
+    <script src="locations.js"></script>
+    <script src="photosnear.js"></script>
+    </body>
+</html>
+
+
