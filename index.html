@@ -17,11 +17,11 @@
 
 <!-- A simple div to block the screen with an image floating in the center -->
 <script id="image-popup-template" type="text/template">
-  <div class="image-box">
-      <h3 class="text-center text-muted"><%= image.get('title') %></h3>
+    <h3 class="text-center text-muted"><%= image.get('title') %></h3>
+    <div class="image-box">
         <img src="<%= image.get("url_m") %>" srcset="<%= image.get("url_n") %> 2x, <%= image.get("url_z") %> 3x" class="thumb old-image">
-        <img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="new-image">
-    <p class="text-center text-muted small">Click anywhere to return to Gallery</p>
+        <img src="<%= image.get("url_c") %>" srcset="<%= image.get("url_h")?image.get("url_h")+" 2x":"" %>" class="full new-image">
+    <p class="text-center text-muted small">Click anywhere to return to Gallery<span class="pink">.</span></p>
   </div>
 </script>
 

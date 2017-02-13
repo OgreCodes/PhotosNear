@@ -102,17 +102,16 @@ var ImagePopupView = Backbone.View.extend({
 		this.$('img.new-image').on('load', _.bind(this.revive, this)); 
 	},
 	render: function() {
-		// render the popup and return 
 		this.$el.html(imagePopupTemplate({ image: this.model }));
-		// This ensures the images are visible, centered, and the same size.
 		this.$el.css("paddingTop", $(window).scrollTop()+5);
-		this.$("img").css("maxWidth", Math.min(800,$(window).width() - 8))
-			.css("maxHeight", Math.min(800,$(window).height() - 120));
 	},
 	events: {
 		'click': 'teardown'
 	},
 	revive: function() {
+		// This ensures the images are visible, centered, and fit the page.
+		this.$("img.full").css("maxWidth", Math.min(800,$(window).width() - 8))
+			.css("maxHeight", Math.min(800,$(window).height() - 120));
 		this.$("img.thumb").remove();
 		this.$("img.new-image").removeClass("new-image");
 	},
