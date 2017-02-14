@@ -7,11 +7,12 @@
 
 // Set some contants
 var ONE_DAY = 24 * 60 * 60 * 1000;
+var perPage = 7;
 var flickrRequest = {
     format: "json",
     api_key: "0dc3cd0420b3d31add36e5785a2c08b8",
     method:"flickr.photos.search",
-    per_page: 5,
+    per_page: perPage,
     sort: "date-posted-desc",
     extras: "url_m,url_n, url_z, url_c, url_o" // Add on image URLs 
 };
@@ -30,7 +31,8 @@ var ImageFinder = Backbone.Collection.extend({
 		// Grab the current page, and total pages for later use and tell the collection where to find the image objects.
 		this.currentPage = response.photos.page;
 		this.maxPages = response.photos.pages;
-        return response.photos.photo;  
+		// Sample just 5 random images for a bit of variety. 
+        return _.sample(response.photos.photo, 5);
 	},
 	initialize: function() {
 		// Lay out the basic request parameters 
